@@ -1,6 +1,8 @@
 <template>
     <div class="ass">
-      <p>我的世界</p>
+      <div class="box">
+
+      </div>
     </div>
 </template>
 
@@ -14,6 +16,17 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+    .ass {
+      height: 100%;
+      background-color: rgb(110, 110, 110) !important;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .box {
+      height: 400px;
+      width: 500px;
+      background-color: white;
+    }
 </style>

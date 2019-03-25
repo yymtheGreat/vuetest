@@ -1,19 +1,17 @@
 <template>
-    <div class="ass">
-      <p>我的世界22323</p>
-    </div>
+  <div>
+
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'Login',
+  name: 'Home',
   data () {
     return {}
   }
-
 }
 </script>
 
 <style>
-
 </style>

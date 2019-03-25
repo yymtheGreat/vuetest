@@ -1,6 +1,6 @@
 <template>
 <div id="app">
-    <p>dsfsdf</p>
+
     <!--路由出口-->
     <!-- <Login></Login> -->
     <router-view></router-view>
@@ -20,4 +20,7 @@ export default {
 </script>
 
 <style>
+  #app{
+    height: 100%;
+  }
 </style>
