@@ -1,17 +1,13 @@
 <template>
   <div>
-    <p>zheshihome</p>
+    <p>usertuzjian</p>
   </div>
 </template>
-
 <script>
 export default {
-  name: 'Home',
-  data () {
-    return {}
-  }
+  name: 'UserList'
 }
 </script>
+<style scoped>
 
-<style>
 </style>

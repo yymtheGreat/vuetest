@@ -18,7 +18,6 @@
 
 <script>
 import axios from 'axios'
-import { async } from 'q';
 export default {
   name: 'Login',
   data () {
@@ -43,16 +42,15 @@ export default {
   methods: {
     async onSubmit () {
       this.$refs.loginFormEl.validate((valid) => {
-          if (valid) {
-            this.login()
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        })
+        if (valid) {
+          this.login()
+        } else {
+          return false
+        }
+      })
     },
     async login () {
-               const resData = await axios.post(
+      const resData = await axios.post(
         'http://localhost:8888/api/private/v1/login',
         this.LoginForm
       )
@@ -62,15 +60,14 @@ export default {
           message: '登录成功',
           type: 'success'
         })
+        this.$router.replace('/')
       } else {
         this.$message({
           message: `${resData.data.meta.msg}`,
           type: 'warning'
         })
       }
-        }
-
-
+    }
   }
 }
 </script>
