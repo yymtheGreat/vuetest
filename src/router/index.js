@@ -7,7 +7,7 @@ import UserList from '@/views/User'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     { path: '/login', component: Login },
     { path: '/',
@@ -19,3 +19,17 @@ export default new Router({
     }
   ]
 })
+router.beforeEach((to, from, next) => {
+  console.log('守卫启动')
+  if (to.path === '/login') {
+    return next()
+  }
+  // 验证登录状态
+  const token = window.localStorage.getItem('token')
+  if (!token) {
+    return next('/login')
+  }
+  next()
+})
+
+export default router

@@ -60,6 +60,7 @@ export default {
           message: '登录成功',
           type: 'success'
         })
+        window.localStorage.setItem('token', resData.data.data.token)
         this.$router.replace('/')
       } else {
         this.$message({
