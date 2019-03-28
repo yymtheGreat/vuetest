@@ -5,13 +5,34 @@
     </el-col>
     <el-col :span="16">Fate Ground Order</el-col>
     <el-col :span="4">
-      <a href>退出</a>
+      <el-button type='primary' @click="handleLogout">退出</el-button>
     </el-col>
   </el-row>
 </template>
 <script>
 export default {
-  name: 'AppHeader'
+  name: 'AppHeader',
+  methods: {
+    handleLogout () {
+      this.$confirm('你真的要离开吗 QAQ', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          window.localStorage.removeItem('token')
+          this.$router.replace('/login')
+          this.$message({
+            type: 'success',
+            message: '再您马的见!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '哦 豁'
+          })
+        })
+    }
+  }
 }
 </script>
 <style scoped>
