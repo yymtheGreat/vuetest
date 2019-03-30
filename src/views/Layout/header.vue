@@ -10,27 +10,28 @@
   </el-row>
 </template>
 <script>
+import { removeToken } from '@/utils/auth'
 export default {
   name: 'AppHeader',
   methods: {
     handleLogout () {
       this.$confirm('你真的要离开吗 QAQ', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          window.localStorage.removeItem('token')
-          this.$router.replace('/login')
-          this.$message({
-            type: 'success',
-            message: '再您马的见!'
-          });
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '哦 豁'
-          })
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        removeToken()
+        this.$router.replace('/login')
+        this.$message({
+          type: 'success',
+          message: '再您马的见!'
         })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '哦 豁'
+        })
+      })
     }
   }
 }

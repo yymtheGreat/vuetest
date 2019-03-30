@@ -25,3 +25,17 @@ export const addUser = ({ username, password, email, mobile }) => {
     }
   }).then(res => res.data)
 }
+
+// 更改用户状态
+export const changeState = (id, state) => request({
+  method: 'put',
+  url: `/users/${id}/state/${state}`
+}).then(res => res.data)
+
+// 删除用户
+export const deleteUser = (id) => {
+  return request({
+    method: 'delete',
+    url: `users/${id}`
+  }).then(res => res.data)
+}

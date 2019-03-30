@@ -24,6 +24,30 @@
       <el-table-column prop="username" label="姓名" width="180"></el-table-column>
       <el-table-column prop="email" label="邮箱" width="180"></el-table-column>
       <el-table-column prop="mobile" label="电话"></el-table-column>
+      <el-table-column label="用户状态">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.mg_state"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            @change="handleChangeState(scope.row)"
+            >
+          </el-switch>
+        </template>
+      </el-table-column>
+      <!-- 自定义按钮 -->
+      <el-table-column label="操作">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            @click="$refs.userEditEl.showEditDiglog(scope.row)">编辑</el-button>
+          <el-button
+            size="mini"
+            type="danger"
+            @click="handleDelete(scope.row)">删除</el-button>
+          <el-button type="success" icon="el-icon-check" size="mini">分类角色</el-button>
+        </template>
+    </el-table-column>
     </el-table>
     <!-- 用户添加的弹出框 -->
     <el-dialog title="添加用户" :visible.sync="addFormVisible" width="500px" >
@@ -47,11 +71,15 @@
         <el-button type="primary" @click.prevent="handleAdd">确 定</el-button>
       </div>
     </el-dialog>
+    <!-- 用户更改弹出框 -->
+    <UserEdit ref='userEditEl'></UserEdit>
   </el-card>
 </template>
 <script>
 // import axios from 'axios'
-import { getUserList, addUser } from '@/api/user'
+// import { getUserList, addUser } from '@/api/user'
+import * as User from '@/api/user'
+import UserEdit from './edit'
 export default {
   name: 'UserList',
   data () {
@@ -63,7 +91,8 @@ export default {
         username: '',
         password: '',
         email: '',
-        mobile: ''
+        mobile: '',
+        mg_state: ''
       },
       tableLoading: true,
       addRules: {
@@ -90,7 +119,7 @@ export default {
   },
   methods: {
     async loadUsers () {
-      const { data } = await getUserList({})
+      const { data } = await User.getUserList({})
       this.tableData = data.users
       this.tableLoading = false
     },
@@ -104,7 +133,7 @@ export default {
       })
     },
     async sumAdd () {
-      const { meta } = await addUser(this.addFormData)
+      const { meta } = await User.addUser(this.addFormData)
       console.log(meta)
       if (meta.status === 201) {
         this.$refs.addFormEl.resetFields()
@@ -114,7 +143,41 @@ export default {
     },
     indexMethod (index) {
       return index * 2
+    },
+    handleEdit () {},
+    handleDelete (item) {
+      this.$confirm('确定要删除吗', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+        const { meta } = await User.deleteUser(item.id)
+        if (meta.status === 200) {
+          this.$message({
+            type: 'success',
+            message: `${meta.msg}`
+          })
+          this.loadUsers()
+        }
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消删除'
+        })
+      })
+    },
+    async handleChangeState (item) {
+      const { meta, data } = await User.changeState(item.id, item.mg_state)
+      if (meta.status === 200) {
+        this.$message({
+          type: 'success',
+          message: `${data.mg_state ? '启用' : '禁用'}用户状态成功`
+        })
+      }
     }
+  },
+  components: {
+    UserEdit
   }
 }
 </script>

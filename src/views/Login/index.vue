@@ -18,6 +18,7 @@
 
 <script>
 import { login } from '@/api'
+import { setToken } from '@/utils/auth.js'
 export default {
   name: 'Login',
   data () {
@@ -56,7 +57,7 @@ export default {
           message: '登录成功',
           type: 'success'
         })
-        window.localStorage.setItem('token', data.token)
+        setToken(data.token)
         this.$router.replace('/')
       } else {
         this.$message({
