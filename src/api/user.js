@@ -39,3 +39,22 @@ export const deleteUser = (id) => {
     url: `users/${id}`
   }).then(res => res.data)
 }
+// 编辑用户
+export const changeUser = ({ email, mobile, id }) => {
+  return request({
+    method: 'put',
+    url: `users/${id}`,
+    data: {
+      email,
+      mobile
+    }
+  }).then(res => res.data)
+}
+
+// 获取用户数据
+export const getUser = ({id}) => {
+  return request({
+    method: 'get',
+    url: `users/${id}`,
+  }).then(res => res.data)
+}

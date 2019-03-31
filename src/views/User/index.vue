@@ -45,7 +45,7 @@
             size="mini"
             type="danger"
             @click="handleDelete(scope.row)">删除</el-button>
-          <el-button type="success" icon="el-icon-check" size="mini">分类角色</el-button>
+          <el-button type="success" icon="el-icon-check" size="mini" @click="$refs.editRoleEl.showEditDiglog(scope.row)">分类角色</el-button>
         </template>
     </el-table-column>
     </el-table>
@@ -72,12 +72,15 @@
       </div>
     </el-dialog>
     <!-- 用户更改弹出框 -->
-    <UserEdit ref='userEditEl'></UserEdit>
+    <UserEdit ref='userEditEl' @editWinner='loadUsers()'></UserEdit>
+    <!-- 更改用户权限弹出框 -->
+    <EditRole ref='editRoleEl'></EditRole>
   </el-card>
 </template>
 <script>
 // import axios from 'axios'
 // import { getUserList, addUser } from '@/api/user'
+import EditRole from './edit-role'
 import * as User from '@/api/user'
 import UserEdit from './edit'
 export default {
@@ -177,7 +180,8 @@ export default {
     }
   },
   components: {
-    UserEdit
+    UserEdit,
+    EditRole
   }
 }
 </script>
