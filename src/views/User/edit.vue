@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { changeUser,getUser } from '@/api/user.js'
+import { changeUser, getUser } from '@/api/user.js'
 export default {
   name: 'UserEdit',
   data () {
@@ -59,9 +59,9 @@ export default {
       }
     },
     async showEditDiglog (id) {
-     const { data, meta } =await getUser(id)
-     this.formVisible=true
-     this.editForm = data
+      const { data } = await getUser(id)
+      this.formVisible = true
+      this.editForm = data
       console.log(this.editForm)
     }
   }

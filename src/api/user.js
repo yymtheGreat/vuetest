@@ -1,13 +1,14 @@
 import request from '@/utils/request'
 
 // 拉取用户列表
-export const getUserList = ({ pagenum = 1, pagesize = 10 }) => {
+export const getUserList = ({ pagenum, pagesize, query}) => {
   return request({
     method: 'get',
     url: '/users',
     params: {
       pagenum,
-      pagesize
+      pagesize,
+      query
     }
   }).then(res => res.data)
 }
@@ -52,9 +53,9 @@ export const changeUser = ({ email, mobile, id }) => {
 }
 
 // 获取用户数据
-export const getUser = ({id}) => {
+export const getUser = ({ id }) => {
   return request({
     method: 'get',
-    url: `users/${id}`,
+    url: `users/${id}`
   }).then(res => res.data)
 }

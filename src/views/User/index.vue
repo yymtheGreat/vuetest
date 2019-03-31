@@ -10,7 +10,7 @@
     <!-- 搜索框 -->
     <el-row :gutter="30">
       <el-col :span="6">
-        <el-input placeholder="请输入内容" v-model="searchText">
+        <el-input placeholder="请输入内容" v-model="searchText" @keyup.enter.native='loadUsers()'>
           <i slot="prefix" class="el-input__icon el-icon-search"></i>
         </el-input>
       </el-col>
@@ -75,6 +75,14 @@
     <UserEdit ref='userEditEl' @editWinner='loadUsers()'></UserEdit>
     <!-- 更改用户权限弹出框 -->
     <EditRole ref='editRoleEl'></EditRole>
+    <!-- 分页按钮 -->
+    <el-pagination
+      background
+      layout="prev, pager, next"
+      :total="userTotal"
+      :page-size="5"
+      @current-change='loadUsers'>
+    </el-pagination>
   </el-card>
 </template>
 <script>
@@ -88,6 +96,7 @@ export default {
   data () {
     return {
       tableData: [],
+      userTotal: 0,
       searchText: '',
       addFormVisible: false,
       addFormData: {
@@ -121,10 +130,15 @@ export default {
     this.loadUsers()
   },
   methods: {
-    async loadUsers () {
-      const { data } = await User.getUserList({})
+    bbr (qq) {
+      console.log(qq)
+    },
+    async loadUsers (page = 1) {
+      const { data } = await User.getUserList({ pagenum: page, pagesize: 5, query: this.searchText })
       this.tableData = data.users
+      this.userTotal = data.total
       this.tableLoading = false
+      console.log(this.userTotal)
     },
     handleAdd () {
       this.$refs.addFormEl.validate(async valid => {
@@ -191,5 +205,9 @@ export default {
 }
 .el-table {
   margin-top: 20px;
+}
+.el-pagination {
+  margin-top: 10px;
+  text-align: center
 }
 </style>
